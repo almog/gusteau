@@ -19,7 +19,10 @@ module Gusteau
 
       @server.run "sh #{dest_dir}/bootstrap.sh #{Gusteau::Config.settings['chef_version']}" if opts['bootstrap']
 
-      cmd  = "unset GEM_HOME; unset GEM_PATH; chef-solo -c #{dest_dir}/solo.rb -j #{dest_dir}/dna.json --color"
+      cmd  = "unset GEM_HOME; unset GEM_PATH;"
+      cmd << "export http_proxy=\"#{Gusteau::Config.settings['http_proxy']}\";"   if Gusteau::Config.settings['http_proxy']
+      cmd << "export https_proxy=\"#{Gusteau::Config.settings['https_proxy']}\";" if Gusteau::Config.settings['https_proxy']
+      cmd << "chef-solo -c #{dest_dir}/solo.rb -j #{dest_dir}/dna.json --color"
       cmd << " -F #{opts['format']}"    if opts['format']
       cmd << " -l #{opts['log_level']}" if opts['log_level']
       cmd << " -W"                      if opts['why-run']
