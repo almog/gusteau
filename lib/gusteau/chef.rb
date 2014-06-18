@@ -33,7 +33,7 @@ module Gusteau
 
     def files_list(dna_path)
       bootstrap_dir = File.expand_path('../../../bootstrap', __FILE__)
-      bootstrap = Gusteau::Config.settings['bootstrap'] || "#{bootstrap_dir}/#{@platform}.sh"
+      bootstrap = Gusteau::Config.settings['bootstrap'] || "#{bootstrap_dir}/#{@platform}.sh.erb"
 
       {
         dna_path                               => "dna.json",
